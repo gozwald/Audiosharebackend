@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/test", usersRouter);
 
+mongoose.set("useCreateIndex", true);
 mongoose.connect(
   `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`,
   { useNewUrlParser: true, useUnifiedTopology: true }
