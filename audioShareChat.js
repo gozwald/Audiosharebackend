@@ -6,7 +6,6 @@ const audioShareChat = mongoose.Schema(
     message: { type: String, required: true },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
       required: true,
     },
   },
@@ -15,4 +14,4 @@ const audioShareChat = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("audShareChat", messageSchema);
+module.exports = mongoose.model("audShareChat", audioShareChat);
