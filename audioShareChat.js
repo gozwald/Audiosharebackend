@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
 
-const MessageSchema = mongoose.Schema(
+const audioShareChat = mongoose.Schema(
   {
     audioId: { type: mongoose.Schema.Types.ObjectId, required: true },
-    message: {
-      text: { type: String, required: true },
-    },
+    message: { type: String, required: true },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -17,4 +15,4 @@ const MessageSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("audShareChat", MessageSchema);
+module.exports = mongoose.model("audShareChat", messageSchema);
