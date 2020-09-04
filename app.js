@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const postRouter = require("./routes/audioPost");
+const login = require("./routes/login");
 
 const app = express();
 
@@ -26,7 +27,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/audiopost", postRouter);
-app.use("/auth", usersRouter);
+app.use("/register", usersRouter);
+app.use("/login", login);
 
 mongoose.set("useCreateIndex", true);
 mongoose.connect(
