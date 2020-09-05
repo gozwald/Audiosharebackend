@@ -46,8 +46,8 @@ app.use("/", indexRouter);
 app.use("/register", register);
 app.use("/login", login);
 app.use("/dashboard", ensureAuthenticated, dashboard);
-app.use("/audiopost", audioPost);
-app.use("/chatpost", chatPost);
+app.use("/audiopost", ensureAuthenticated, audioPost);
+app.use("/chatpost", ensureAuthenticated, chatPost);
 
 mongoose.set("useCreateIndex", true);
 mongoose.connect(
