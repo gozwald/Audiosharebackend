@@ -25,8 +25,13 @@ db.once("open", function () {
 const ensureAuthenticated = (req, res, next) => {
   const { token } = req.cookies;
   if (token) {
-    jwt.verify(token, "bleeeblaaablooo", () => {
-      return next();
+    jwt.verify(token, "bleeeblaaablooo", (err, decoded) => {
+      if (decoded) {
+        req.decoded = decoded;
+        return next();
+      } else {
+        res.send("unauthorized token");
+      }
     });
   } else console.log("error");
 };

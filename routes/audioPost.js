@@ -3,7 +3,7 @@ var router = express.Router();
 const jwtDecode = require("jwt-decode");
 const audioSharePost = require("../models/audioShareAudio");
 
-router.put("/", function (req, res, next) {
+router.post("/", function (req, res, next) {
   const decoded = jwtDecode(req.cookies.token);
   const { username } = decoded;
   const { url, gps } = req.body;
