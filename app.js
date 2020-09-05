@@ -7,9 +7,11 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const postRouter = require("./routes/audioPost");
 const login = require("./routes/login");
+const register = require("./routes/register");
+const dashboard = require("./routes/dashboard");
+const audioPost = require("./routes/audioPost");
+const chatPost = require("./routes/chatPost");
 
 const app = express();
 
@@ -26,9 +28,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/audiopost", postRouter);
-app.use("/register", usersRouter);
+app.use("/register", register);
 app.use("/login", login);
+app.use("/dashboard", dashboard);
+app.use("/audiopost", audioPost);
+app.use("/chatpost", chatPost);
 
 mongoose.set("useCreateIndex", true);
 mongoose.connect(
