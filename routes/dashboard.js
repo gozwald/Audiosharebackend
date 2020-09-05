@@ -1,18 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const audioShareUser = require("../audioShareUser");
-const jwt = require("jsonwebtoken");
+const jwtDecode = require("jwt-decode");
+const audioShareUser = require("../models/audioShareUser");
 
 router.post("/", function (req, res, next) {
-  const { username, password } = req.body;
+  const decoded = jwtDecode(req.cookies.token);
+  const { username } = decoded;
   audioShareUser
-    .findOne({ username }, "password")
+    .findOne({ username })
     .then((doc) => {
-      if (doc.password === password) {
-        jwt.sign({ username }, "bleeeblaaablooo", function (err, token) {
-          res.cookie("token", token).send("cookie set and logged in");
-        });
-      } else res.send("wrong password");
+      console.log(doc);
     })
     .catch((err) => {
       console.error(err);

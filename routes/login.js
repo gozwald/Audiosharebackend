@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const audioShareUser = require("../audioShareUser");
+const audioShareUser = require("../models/audioShareUser");
 const jwt = require("jsonwebtoken");
 
 router.post("/", function (req, res, next) {

@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const audioSharePost = require("../audioShareAudio");
+const audioSharePost = require("../models/audioShareAudio");
 
 router.put("/", function (req, res, next) {
   const { url, gps, user } = req.body;

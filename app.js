@@ -12,6 +12,7 @@ const register = require("./routes/register");
 const dashboard = require("./routes/dashboard");
 const audioPost = require("./routes/audioPost");
 const chatPost = require("./routes/chatPost");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
@@ -20,6 +21,15 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
   console.log("connected");
 });
+
+const ensureAuthenticated = (req, res, next) => {
+  const { token } = req.cookies;
+  if (token) {
+    jwt.verify(token, "bleeeblaaablooo", () => {
+      return next();
+    });
+  } else console.log("error");
+};
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -30,7 +40,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/register", register);
 app.use("/login", login);
-app.use("/dashboard", dashboard);
+app.use("/dashboard", ensureAuthenticated, dashboard);
 app.use("/audiopost", audioPost);
 app.use("/chatpost", chatPost);
 

@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const audioShareUser = require("../audioShareUser");
+const audioShareUser = require("../models/audioShareUser");
 
 router.put("/", function (req, res, next) {
   const { username, email, password } = req.body;
