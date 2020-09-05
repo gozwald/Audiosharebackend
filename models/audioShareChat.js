@@ -4,10 +4,7 @@ const audioShareChat = mongoose.Schema(
   {
     audioId: { type: mongoose.Schema.Types.ObjectId, required: true },
     message: { type: String, required: true },
-    sender: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
+    username: { type: String, required: true },
   },
   {
     timestamps: true,

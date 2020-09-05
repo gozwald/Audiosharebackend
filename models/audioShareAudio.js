@@ -4,7 +4,7 @@ const audioSchema = mongoose.Schema(
   {
     audioContent: { type: String, required: true },
     gps: { type: String, required: true },
-    user: { type: mongoose.Schema.Types.ObjectId, required: true },
+    username: { type: String, required: true },
   },
   {
     timestamps: true,

@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const jwtDecode = require("jwt-decode");
-const audioShareUser = require("../models/audioShareUser");
+const audioSharePost = require("../models/audioShareAudio");
 
 router.post("/", function (req, res, next) {
   const decoded = jwtDecode(req.cookies.token);
   const { username } = decoded;
-  audioShareUser
-    .findOne({ username })
+  audioSharePost
+    .find({ username })
     .then((doc) => {
       console.log(doc);
     })
