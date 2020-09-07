@@ -11,7 +11,7 @@ router.post("/", function (req, res, next) {
     .findOne({ username }, "password")
     .then((doc) => {
       bcrypt.compare(password, doc.password, (err, result) => {
-        if (result) {
+        if (result === true) {
           jwt.sign({ username }, "bleeeblaaablooo", function (err, token) {
             res.cookie("token", token).send("cookie set and logged in");
           });

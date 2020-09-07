@@ -7,7 +7,7 @@ router.post("/", function (req, res, next) {
   audioSharePost
     .find({ username })
     .then((doc) => {
-      console.log(doc);
+      res.send(doc);
     })
     .catch((err) => {
       console.error(err);
