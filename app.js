@@ -33,7 +33,7 @@ const ensureAuthenticated = (req, res, next) => {
         res.send("unauthorized token");
       }
     });
-  } else console.log("error");
+  } else console.log("no token present");
 };
 
 app.use(logger("dev"));

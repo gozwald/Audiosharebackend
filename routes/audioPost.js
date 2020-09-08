@@ -4,9 +4,7 @@ const audioSharePost = require("../models/audioShareAudio");
 const multer = require("multer");
 const { Storage } = require("@google-cloud/storage");
 
-const storage = new Storage({
-  keyFilename: "./firebase.json",
-});
+const storage = new Storage();
 
 const uploader = multer({
   storage: multer.memoryStorage(),
@@ -15,9 +13,11 @@ const uploader = multer({
   },
 });
 
-let bucket = storage.bucket("audioshare-9a922.appspot.com");
+let bucket = storage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
 router.post("/", uploader.single("audio"), async (req, res, next) => {
+  const { username } = req.decoded;
+  const { gps } = req.body;
   try {
     if (!req.file) {
       res.status(400).send("Error, could not upload file");
@@ -46,6 +46,15 @@ router.post("/", uploader.single("audio"), async (req, res, next) => {
       res
         .status(200)
         .send({ fileName: req.file.originalname, fileLocation: publicUrl });
+      const newAudio = new audioSharePost({
+        audioContent: publicUrl,
+        gps: gps,
+        username: username,
+      });
+      newAudio.save(function (error, document) {
+        if (error) console.error(error), res.send("something went wrong...");
+        else console.log(document);
+      });
     });
 
     // When there is no more data to be consumed from the stream
@@ -55,18 +64,5 @@ router.post("/", uploader.single("audio"), async (req, res, next) => {
     return;
   }
 });
-
-//   const { username } = req.decoded;
-//   const { url, gps } = req.body;
-//   const newAudio = new audioSharePost({
-//     audioContent: url,
-//     gps: gps,
-//     username: username,
-//   });
-//   newAudio.save(function (error, document) {
-//     if (error) console.error(error), res.send("something went wrong...");
-//     else console.log(document), res.send(document);
-//   });
-// });
 
 module.exports = router;
