@@ -13,9 +13,9 @@ router.post("/", function (req, res, next) {
       bcrypt.compare(password, doc.password, (err, result) => {
         if (result === true) {
           jwt.sign({ username }, "bleeeblaaablooo", function (err, token) {
-            res.cookie("token", token).send("cookie set and logged in");
+            res.cookie("token", token).json("cookie set and logged in");
           });
-        } else res.send("wrong password");
+        } else res.json("wrong password");
       });
     })
     .catch((err) => {

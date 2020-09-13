@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const helmet = require("helmet");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -24,13 +24,7 @@ const upload = multer({
 });
 
 app.use(cors());
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
-  console.log("connected");
-});
-
+app.use(helmet());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -59,6 +53,12 @@ app.use("/login", login);
 app.use("/dashboard", ensureAuthenticated, dashboard);
 app.use("/audiopost", ensureAuthenticated, audioPost);
 app.use("/chatpost", ensureAuthenticated, chatPost);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  console.log("connected");
+});
 
 mongoose.set("useCreateIndex", true);
 mongoose.connect(
