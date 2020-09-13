@@ -3,7 +3,17 @@ const mongoose = require("mongoose");
 const audioSchema = mongoose.Schema(
   {
     audioContent: { type: String, required: true },
-    gps: { type: String },
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
     username: { type: String, required: true },
   },
   {

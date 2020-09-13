@@ -1,31 +1,26 @@
 var express = require("express");
 var router = express.Router();
 const audioSharePost = require("../models/audioShareAudio");
-const multer = require("multer");
 const { Storage } = require("@google-cloud/storage");
+const { v4: uuidv4 } = require("uuid");
 
 const storage = new Storage();
 
-const uploader = multer({
-  storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 5 * 1024 * 1024, // limiting files size to 5 MB
-  },
-});
-
 let bucket = storage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
-router.post("/", uploader.single("audio"), async (req, res, next) => {
+router.post("/", (req, res, next) => {
   const { username } = req.decoded;
-  const { gps } = req.body;
+  const { location } = req.body;
+
   try {
     if (!req.file) {
-      res.status(400).send("Error, could not upload file");
+      res.status(400).json("Error, could not upload file");
       return;
     }
 
     // Create new blob in the bucket referencing the file
-    const blob = bucket.file(req.file.originalname);
+
+    const blob = bucket.file(uuidv4());
 
     // Create writable stream and specifying file mimetype
     const blobWriter = blob.createWriteStream({
@@ -43,24 +38,23 @@ router.post("/", uploader.single("audio"), async (req, res, next) => {
       }/o/${encodeURI(blob.name)}?alt=media`;
 
       // Return the file name and its public URL
-      res
-        .status(200)
-        .send({ fileName: req.file.originalname, fileLocation: publicUrl });
       const newAudio = new audioSharePost({
         audioContent: publicUrl,
-        gps: gps,
+        location: JSON.parse(location),
         username: username,
       });
       newAudio.save(function (error, document) {
-        if (error) console.error(error), res.send("something went wrong...");
-        else console.log(document);
+        if (error) console.error(error), res.json("something went wrong...");
+        else
+          console.log(document),
+            res.status(200).json("succes! audio uploaded and saved to db");
       });
     });
 
     // When there is no more data to be consumed from the stream
     blobWriter.end(req.file.buffer);
   } catch (error) {
-    res.status(400).send(`Error, could not upload file: ${error}`);
+    res.status(400).json(`Error, could not upload file: ${error}`);
     return;
   }
 });
