@@ -1,4 +1,4 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const helmet = require("helmet");
 const express = require("express");
 const path = require("path");
@@ -36,7 +36,7 @@ app.use(express.static("public"));
 const ensureAuthenticated = (req, res, next) => {
   const { token } = req.body;
   if (token) {
-    jwt.verify(token, "bleeeblaaablooo", (err, decoded) => {
+    jwt.verify(token, process.env.JWT_CRED, (err, decoded) => {
       if (decoded) {
         req.decoded = decoded;
         return next();
