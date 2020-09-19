@@ -50,6 +50,7 @@ router.post("/", (req, res, next) => {
             res.status(200).json({
               msg: "saved to db and uploaded!",
               url: publicUrl,
+              location: location,
             });
       });
     });
