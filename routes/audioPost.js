@@ -47,7 +47,10 @@ router.post("/", (req, res, next) => {
         if (error) console.error(error), res.json("something went wrong...");
         else
           console.log(document),
-            res.status(200).json("succes! audio uploaded and saved to db");
+            res.status(200).json({
+              msg: "saved to db and uploaded!",
+              url: publicUrl,
+            });
       });
     });
 
