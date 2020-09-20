@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const audioShareAudio = require("../models/audioShareAudio");
 
-router.get("/", (req, res, next) => {
+router.post("/", (req, res, next) => {
   const { location } = req.body;
   const distanceInKilometer = 1;
   const radius = distanceInKilometer / 6378.1;
