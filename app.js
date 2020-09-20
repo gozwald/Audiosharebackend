@@ -11,6 +11,7 @@ const register = require("./routes/register");
 const dashboard = require("./routes/dashboard");
 const audioPost = require("./routes/audioPost");
 const chatPost = require("./routes/chatPost");
+const findposts = require("./routes/findPosts");
 const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
@@ -53,6 +54,7 @@ app.use("/login", login);
 app.use("/dashboard", ensureAuthenticated, dashboard);
 app.use("/audiopost", ensureAuthenticated, audioPost);
 app.use("/chatpost", ensureAuthenticated, chatPost);
+app.use("/findposts", findposts);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
