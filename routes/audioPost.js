@@ -38,7 +38,7 @@ router.post("/", (req, res, next) => {
       }/o/${encodeURI(blob.name)}?alt=media`;
 
       // Return the file name and its public URL
-      const newAudio = new audioSharePost({
+      const newAudio = new audioSharePost.audioPost({
         audioContent: publicUrl,
         location: JSON.parse(location),
         username: username,

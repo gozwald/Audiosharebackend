@@ -21,4 +21,24 @@ const audioSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("audShareAudio", audioSchema);
+const audioPost = mongoose.model("AudShareAudio", audioSchema);
+
+const audioShareChat = mongoose.Schema(
+  {
+    audioId: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+    message: { type: String, required: true },
+    username: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const chatPost = mongoose.model("AudShareChat", audioShareChat);
+
+module.exports = {
+  audioPost,
+  chatPost,
+};

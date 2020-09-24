@@ -3,15 +3,16 @@ var router = express.Router();
 const audioSharePost = require("../models/audioShareAudio");
 
 router.put("/", function (req, res, next) {
-  const { url, gps, user } = req.body;
-  const newAudio = new audioSharePost({
-    audioContent: url,
-    gps: gps,
-    user: user,
+  // const { username } = req.decoded;
+  const { id, message, username } = req.body;
+  const newChat = new audioSharePost.chatPost({
+    audioId: id,
+    message: message,
+    username: username,
   });
-  newAudio.save(function (error, document) {
-    if (error) console.error(error), res.send("something went wrong...");
-    else console.log(document), res.send(document);
+  newChat.save(function (error, document) {
+    if (error) console.error(error), res.json("something went wrong...");
+    else console.log(document), res.status(200).json(document);
   });
 });
 

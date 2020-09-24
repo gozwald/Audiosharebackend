@@ -53,7 +53,7 @@ app.use("/register", register);
 app.use("/login", login);
 app.use("/dashboard", ensureAuthenticated, dashboard);
 app.use("/audiopost", ensureAuthenticated, audioPost);
-app.use("/chatpost", ensureAuthenticated, chatPost);
+app.use("/chatpost", chatPost);
 app.use("/findposts", findposts);
 
 const db = mongoose.connection;
