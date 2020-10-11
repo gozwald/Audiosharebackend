@@ -4,7 +4,7 @@ const audioShareAudio = require("../models/audioShareAudio");
 
 router.post("/", (req, res, next) => {
   const { location } = req.body;
-  const distanceInKilometer = 1;
+  const distanceInKilometer = 100;
   const radius = distanceInKilometer / 6378.1;
 
   audioShareAudio.audioPost
