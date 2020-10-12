@@ -9,7 +9,7 @@ const storage = new Storage();
 let bucket = storage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
 router.post("/", (req, res, next) => {
-  const { username } = req.decoded;
+  const { email } = req.decoded;
   const { location } = req.body;
 
   try {
@@ -41,7 +41,7 @@ router.post("/", (req, res, next) => {
       const newAudio = new audioSharePost.audioPost({
         audioContent: publicUrl,
         location: JSON.parse(location),
-        username: username,
+        email: email,
       });
       newAudio.save(function (error, document) {
         if (error) console.error(error), res.json("something went wrong...");
