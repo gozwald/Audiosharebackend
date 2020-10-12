@@ -11,7 +11,7 @@ router.post("/", function (req, res, next) {
       first: first,
       last: last,
       email: email,
-      password: password,
+      password: hash,
     });
 
     newUser.save(function (error, document) {
