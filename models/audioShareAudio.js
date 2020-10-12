@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Comments = new mongoose.Schema(
   {
-    username: {
+    email: {
       type: String,
       required: true,
     },
@@ -30,7 +30,7 @@ const audioSchema = mongoose.Schema(
         required: true,
       },
     },
-    username: { type: String, required: true },
+    email: { type: String, required: true },
     chats: [Comments],
   },
   {
@@ -46,7 +46,7 @@ const audioShareChat = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
     },
     message: { type: String, required: true },
-    username: { type: String, required: true },
+    email: { type: String, required: true },
   },
   {
     timestamps: true,
