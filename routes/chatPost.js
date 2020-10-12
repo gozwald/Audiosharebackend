@@ -6,14 +6,14 @@ var io = socketApi.io;
 
 router.put("/", function (req, res, next) {
   // const { username } = req.decoded;
-  const { id, message, username } = req.body;
+  const { id, message, email } = req.body;
 
   const runCode = async () => {
     const post = await audioSharePost.audioPost.findOne({ _id: id });
 
     post.chats.push({
       message: message,
-      username: username,
+      email: email,
     });
 
     post
