@@ -4,13 +4,14 @@ const audioShareUser = require("../models/audioShareUser");
 const bcrypt = require("bcrypt");
 
 router.post("/", function (req, res, next) {
-  const { username, email, password } = req.body;
+  const { first, last, email, password } = req.body;
 
   bcrypt.hash(password, 10, (err, hash) => {
     const newUser = new audioShareUser({
-      username: username,
-      password: hash,
+      first: first,
+      last: last,
       email: email,
+      password: password,
     });
 
     newUser.save(function (error, document) {
