@@ -5,13 +5,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 router.post("/", function (req, res, next) {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   audioShareUser
-    .findOne({ username }, "password")
+    .findOne({ email }, "password")
     .then((doc) => {
       bcrypt.compare(password, doc.password, (err, result) => {
         if (result === true) {
-          jwt.sign({ username }, process.env.JWT_CRED, function (err, token) {
+          jwt.sign({ email }, process.env.JWT_CRED, function (err, token) {
             console.log("user logged in");
             res.status(200).json(token);
           });
