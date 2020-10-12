@@ -18,7 +18,7 @@ router.put("/", function (req, res, next) {
 
     post
       .save()
-      .then((e) => res.json(e), io.emit(id, { message, username }))
+      .then((e) => res.json(e), io.emit(id, { message, email }))
       .catch((error) => {
         console.error(error), res.json("something is missing...");
       });
