@@ -5,8 +5,8 @@ var socketApi = require("../socketAPI");
 var io = socketApi.io;
 
 router.put("/", function (req, res, next) {
-  // const { username } = req.decoded;
-  const { id, message, email } = req.body;
+  const { email } = req.decoded;
+  const { id, message } = req.body;
 
   const runCode = async () => {
     const post = await audioSharePost.audioPost.findOne({ _id: id });

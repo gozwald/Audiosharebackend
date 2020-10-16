@@ -15,7 +15,8 @@ router.post("/", function (req, res, next) {
     });
 
     newUser.save(function (error, document) {
-      if (error) console.error(error), res.status(400).json("something went wrong...");
+      if (error)
+        console.error(error), res.status(400).json("something went wrong...");
       else console.log(document), res.status(200).json(document);
     });
   });

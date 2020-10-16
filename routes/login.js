@@ -15,10 +15,11 @@ router.post("/", function (req, res, next) {
             console.log("user logged in");
             res.status(200).json(token);
           });
-        } else res.json("wrong password");
+        } else res.sendStatus(401);
       });
     })
     .catch((err) => {
+      res.sendStatus(500);
       console.error(err);
     });
 });
