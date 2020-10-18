@@ -7,6 +7,8 @@ const userSchema = new Schema({
   last: { type: String, required: true },
   password: { type: String, required: true },
   email: { type: String, unique: true, required: true },
+  pic: { type: String },
+  bio: { type: String },
 });
 
 module.exports = mongoose.model("AudShareUser", userSchema);

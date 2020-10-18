@@ -14,6 +14,7 @@ const chatPost = require("./routes/chatPost");
 const getChats = require("./routes/getchats");
 const findposts = require("./routes/findPosts");
 const cookieauth = require("./routes/cookieauth");
+const editProfile = require("./routes/editProfile");
 const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
@@ -59,6 +60,7 @@ app.use("/chatpost", ensureAuthenticated, chatPost);
 app.use("/findposts", ensureAuthenticated, findposts);
 app.use("/getchats", ensureAuthenticated, getChats);
 app.use("/cookieauth", cookieauth);
+app.use("/editprofile", editProfile);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -69,7 +71,7 @@ db.once("open", function () {
 mongoose.set("useCreateIndex", true);
 mongoose.connect(
   `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`,
-  { useNewUrlParser: true, useUnifiedTopology: true }
+  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
 );
 
 module.exports = app;
