@@ -60,7 +60,7 @@ app.use("/chatpost", ensureAuthenticated, chatPost);
 app.use("/findposts", ensureAuthenticated, findposts);
 app.use("/getchats", ensureAuthenticated, getChats);
 app.use("/cookieauth", cookieauth);
-app.use("/editprofile", editProfile);
+app.use("/editprofile", ensureAuthenticated, editProfile);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
