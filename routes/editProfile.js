@@ -10,8 +10,8 @@ const storage = new Storage();
 let bucket = storage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
 router.post("/", (req, res, next) => {
-  // const { email } = req.decoded;
-  const { first, last, password, bio, newEmail, email } = req.body;
+  const { email } = req.decoded;
+  const { first, last, password, bio, newEmail } = req.body;
 
   try {
     if (!req.file) {
@@ -71,7 +71,7 @@ router.post("/", (req, res, next) => {
         else
           console.log(document),
             res.status(200).json({
-              msg: "profile updated",
+              document,
             });
       });
     });
