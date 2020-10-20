@@ -68,11 +68,7 @@ router.post("/", (req, res, next) => {
       );
       updatedProfile.exec(function (error, document) {
         if (error) console.error(error), res.json("something went wrong...");
-        else
-          console.log(document),
-            res.status(200).json({
-              document,
-            });
+        else console.log(document), res.status(200).json(document);
       });
     });
   }
