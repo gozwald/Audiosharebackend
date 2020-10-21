@@ -4,7 +4,7 @@ const audioSharePost = require("../models/audioShareAudio");
 
 router.post("/", function (req, res, next) {
   const { username } = req.decoded;
-  audioSharePost
+  audioSharePost.users
     .find({ username })
     .then((doc) => {
       res.send(doc);

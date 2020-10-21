@@ -21,7 +21,7 @@ const Comments = new Schema(
   }
 );
 
-const audioSchema = Schema(
+const audioSchema = new Schema(
   {
     audioContent: { type: String, required: true },
     location: {
@@ -43,24 +43,23 @@ const audioSchema = Schema(
   }
 );
 
+const userSchema = new Schema({
+  first: { type: String, required: true },
+  last: { type: String, required: true },
+  password: { type: String, required: true },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  pic: { type: String },
+  bio: { type: String },
+});
+
+const users = mongoose.model("AudShareUser", userSchema);
 const audioPost = mongoose.model("AudShareAudio", audioSchema);
-
-// const audioShareChat = mongoose.Schema(
-//   {
-//     audioId: {
-//       type: mongoose.Schema.Types.ObjectId,
-//     },
-//     message: { type: String, required: true },
-//     email: { type: String, required: true },
-//   },
-//   {
-//     timestamps: true,
-//   }
-// );
-
-// const chatPost = mongoose.model("AudShareChat", audioShareChat);
 
 module.exports = {
   audioPost,
-  // chatPost,
+  users,
 };

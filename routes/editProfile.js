@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const audioShareUser = require("../models/audioShareUser");
+const audioSharePost = require("../models/audioShareAudio");
 const { Storage } = require("@google-cloud/storage");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
@@ -52,7 +52,7 @@ router.post("/", (req, res, next) => {
 
   function profileUpdate(url) {
     bcrypt.hash(password, 10, (err, hash) => {
-      const updatedProfile = audioShareUser.findOneAndUpdate(
+      const updatedProfile = audioSharePost.users.findOneAndUpdate(
         { email: email },
         {
           ...(first && { first: first }),

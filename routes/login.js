@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const audioShareUser = require("../models/audioShareUser");
+const audioSharePost = require("../models/audioShareAudio");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 router.post("/", function (req, res, next) {
   const { email, password } = req.body;
-  audioShareUser
+  audioSharePost.users
     .findOne({ email }, "password")
     .then((doc) => {
       bcrypt.compare(password, doc.password, (err, result) => {
