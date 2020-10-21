@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const Comments = new mongoose.Schema(
+const Comments = new Schema(
   {
     email: {
       type: String,
@@ -10,13 +11,17 @@ const Comments = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // link: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "AudShareUser",
+    // },
   },
   {
     timestamps: true,
   }
 );
 
-const audioSchema = mongoose.Schema(
+const audioSchema = Schema(
   {
     audioContent: { type: String, required: true },
     location: {

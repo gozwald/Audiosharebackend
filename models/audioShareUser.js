@@ -6,7 +6,11 @@ const userSchema = new Schema({
   first: { type: String, required: true },
   last: { type: String, required: true },
   password: { type: String, required: true },
-  email: { type: String, unique: true, required: true },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   pic: { type: String },
   bio: { type: String },
 });
