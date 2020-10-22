@@ -9,8 +9,4 @@ io.on("connection", function (socket) {
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
-socketApi.sendNotification = function () {
-  io.sockets.emit("hello", { msg: "Hello World!" });
-};
-
 module.exports = socketApi;

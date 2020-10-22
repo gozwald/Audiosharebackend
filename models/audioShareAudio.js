@@ -3,25 +3,36 @@ const Schema = mongoose.Schema;
 
 const Comments = new Schema(
   {
-    email: {
-      type: String,
-      required: true,
-    },
     message: {
       type: String,
       required: true,
     },
-    // link: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "AudShareUser",
-    // },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "AudShareUser",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const audioSchema = Schema(
+const React = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "AudShareUser",
+    },
+    type: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const audioSchema = new Schema(
   {
     audioContent: { type: String, required: true },
     location: {
@@ -35,32 +46,36 @@ const audioSchema = Schema(
         required: true,
       },
     },
-    email: { type: String, required: true },
+    react: [React],
     chats: [Comments],
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "AudShareUser",
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
+const userSchema = new Schema({
+  first: { type: String, required: true },
+  last: { type: String, required: true },
+  password: { type: String, required: true },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  pic: { type: String },
+  bio: { type: String },
+});
+
+const users = mongoose.model("AudShareUser", userSchema);
 const audioPost = mongoose.model("AudShareAudio", audioSchema);
-
-// const audioShareChat = mongoose.Schema(
-//   {
-//     audioId: {
-//       type: mongoose.Schema.Types.ObjectId,
-//     },
-//     message: { type: String, required: true },
-//     email: { type: String, required: true },
-//   },
-//   {
-//     timestamps: true,
-//   }
-// );
-
-// const chatPost = mongoose.model("AudShareChat", audioShareChat);
 
 module.exports = {
   audioPost,
-  // chatPost,
+  users,
 };

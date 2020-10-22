@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const audioShareUser = require("../models/audioShareUser");
+const audioSharePost = require("../models/audioShareAudio");
 
 router.post("/", function (req, res, next) {
   const { token } = req.body;
   if (token) {
     jwt.verify(token, process.env.JWT_CRED, (err, decoded) => {
       if (decoded) {
-        const getUserData = audioShareUser
+        const getUserData = audioSharePost.users
           .findOne({ email: decoded.email })
           .select(["-password", "-email"]);
         getUserData.exec(function (error, userData) {
