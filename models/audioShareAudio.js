@@ -3,18 +3,29 @@ const Schema = mongoose.Schema;
 
 const Comments = new Schema(
   {
-    email: {
-      type: String,
-      required: true,
-    },
     message: {
       type: String,
       required: true,
     },
-    // link: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "AudShareUser",
-    // },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "AudShareUser",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const React = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "AudShareUser",
+    },
+    type: {
+      type: String,
+    },
   },
   {
     timestamps: true,
@@ -35,8 +46,13 @@ const audioSchema = new Schema(
         required: true,
       },
     },
-    email: { type: String, required: true },
+    react: [React],
     chats: [Comments],
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "AudShareUser",
+      required: true,
+    },
   },
   {
     timestamps: true,

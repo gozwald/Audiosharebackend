@@ -8,11 +8,13 @@ router.put("/", (req, res, next) => {
 
   const query = audioShareAudio.audioPost
     .findOne({ _id: id })
-    // .populate("email")
+    .populate("user")
+    .populate("chats.user")
+    .populate("react.user")
     .sort("-date");
 
   query.exec((err, e) => {
-    console.log(e);
+    // console.log(e);
     res.json(e);
   });
 });

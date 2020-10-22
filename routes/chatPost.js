@@ -5,7 +5,7 @@ var socketApi = require("../socketAPI");
 var io = socketApi.io;
 
 router.put("/", function (req, res, next) {
-  const { email } = req.decoded;
+  const { _id } = req.decoded;
   const { id, message } = req.body;
 
   const runCode = async () => {
@@ -13,12 +13,15 @@ router.put("/", function (req, res, next) {
 
     post.chats.push({
       message: message,
-      email: email,
+      user: _id,
     });
 
     post
       .save()
-      .then((e) => res.json(e), io.emit(id, { message, email }))
+      .then((e) => {
+        res.json(e);
+        io.emit(id, { message, _id });
+      })
       .catch((error) => {
         console.error(error), res.json("something is missing...");
       });
