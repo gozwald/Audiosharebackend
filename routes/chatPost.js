@@ -10,20 +10,15 @@ router.put("/", async function (req, res, next) {
 
   const post = await audioSharePost.audioPost.findOne({ _id: id });
 
-  post.chats.push({
+  await post.chats.push({
     message: message,
     user: _id,
   });
 
-  post
-    .save()
-    .then((e) => {
-      res.json(e);
-      io.emit(id, { message, _id });
-    })
-    .catch((error) => {
-      console.error(error), res.json("something is missing...");
-    });
+  await post.save();
+
+  await post.execPopulate("user chats.user");
+  io.emit(id, post.chats);
 });
 
 module.exports = router;

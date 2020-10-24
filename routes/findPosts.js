@@ -11,6 +11,7 @@ router.post("/", (req, res, next) => {
     .find({
       location: { $geoWithin: { $centerSphere: [location, radius] } },
     })
+    .populate("user")
     .sort("-date")
     .then((result) => {
       res.json(result);

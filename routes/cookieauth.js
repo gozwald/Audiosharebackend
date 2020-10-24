@@ -13,7 +13,7 @@ router.post("/", function (req, res, next) {
           .select(["-password", "-email"]);
         getUserData.exec(function (error, userData) {
           if (error) console.error(error), res.json("something went wrong...");
-          else console.log(userData), res.status(200).json(userData);
+          else res.status(200).json(userData);
         });
       } else {
         res.status(401).json("unauthorized token");
