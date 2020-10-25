@@ -5,14 +5,14 @@ var socketApi = require("../socketAPI");
 var io = socketApi.io;
 
 router.put("/", async (req, res, next) => {
-  const { _id: mongouserid } = req.decoded;
+  const { _id } = req.decoded;
   const { id, message } = req.body;
 
   const post = await audioSharePost.audioPost.findOne({ _id: id });
 
   post.chats.push({
     message: message,
-    user: mongouserid,
+    user: _id,
   });
 
   const save = await post.save();
