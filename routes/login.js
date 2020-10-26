@@ -6,10 +6,10 @@ const bcrypt = require("bcrypt");
 
 router.post("/", function (req, res, next) {
   const { email, password } = req.body;
+
   audioSharePost.users
     .findOne({ email }, "password")
     .then((doc) => {
-      console.log(doc);
       bcrypt.compare(password, doc.password, (err, result) => {
         if (result === true) {
           jwt.sign({ email, _id: doc._id }, process.env.JWT_CRED, function (

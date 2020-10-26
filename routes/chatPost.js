@@ -17,8 +17,9 @@ router.put("/", async (req, res, next) => {
 
   const save = await post.save();
 
-  const populated = await save.execPopulate("user chats.user");
-  io.emit(id, populated.chats);
+  const populated = await save.execPopulate("user chats.user react.user");
+  io.emit(id, populated);
+  res.sendStatus(200);
 });
 
 module.exports = router;

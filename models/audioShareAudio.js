@@ -23,9 +23,9 @@ const React = new Schema(
       type: Schema.Types.ObjectId,
       ref: "AudShareUser",
     },
-    type: {
-      type: String,
-    },
+    // type: {
+    //   type: String,
+    // },
   },
   {
     timestamps: true,

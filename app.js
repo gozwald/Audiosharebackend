@@ -11,6 +11,7 @@ const register = require("./routes/register");
 const dashboard = require("./routes/dashboard");
 const audioPost = require("./routes/audioPost");
 const chatPost = require("./routes/chatPost");
+const reactPost = require("./routes/reactPost");
 const getChats = require("./routes/getchats");
 const findposts = require("./routes/findPosts");
 const cookieauth = require("./routes/cookieauth");
@@ -61,6 +62,7 @@ app.use("/findposts", ensureAuthenticated, findposts);
 app.use("/getchats", ensureAuthenticated, getChats);
 app.use("/cookieauth", cookieauth);
 app.use("/editprofile", ensureAuthenticated, editProfile);
+app.use("/reactpost", ensureAuthenticated, reactPost);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
