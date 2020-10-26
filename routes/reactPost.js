@@ -9,18 +9,13 @@ router.put("/", async (req, res, next) => {
     const { _id: mongouserid } = req.decoded;
     const { id } = req.body;
 
-    console.log(id);
-
     const post = await audioSharePost.audioPost.findOne({ _id: id });
 
     post.react.push({
       user: mongouserid,
     });
-
     const save = await post.save();
-
     const populated = await save.execPopulate("user chats.user react.user");
-
     io.emit(id, populated);
     res.sendStatus(200);
   } catch (error) {
