@@ -9,22 +9,32 @@ router.put("/", async (req, res, next) => {
     const { _id: mongouserid } = req.decoded;
     const { id } = req.body;
 
-    let find = await audioSharePost.audioPost
-      .findOne({ _id: id })
-      .select({ "react._id": mongouserid });
+    // let testQ = await audioSharePost.audioPost.findOne(
+    //   {
+    //     _id: id,
+    //   },
+    //   {
+    //     react: {
+    //       $elemMatch: { user: mongouserid },
+    //     },
+    //   }
+    // );
 
-    if (!find.react.length) {
-      find = await audioSharePost.audioPost.findOne({ _id: id });
-      find.react.push({
-        user: mongouserid,
-      });
-    } else {
-      find = await audioSharePost.audioPost.findOneAndUpdate(
-        { _id: id },
-        { $pull: { react: { _id: find.react[0]._id } } },
-        { new: true }
-      );
-    }
+    // console.log(testQ);
+
+    let find = await audioSharePost.audioPost.findOne({
+      _id: id,
+    });
+
+    const pos = find.react.map((e) => e.user).indexOf(mongouserid);
+    const subid = find.react[pos];
+
+    pos === -1
+      ? find.react.push({
+          user: mongouserid,
+        })
+      : find.react.pull(subid);
+
     const save = await find.save();
     const populated = await save.execPopulate("user chats.user react.user");
     io.emit(id, populated);
