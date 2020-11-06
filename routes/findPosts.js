@@ -11,7 +11,8 @@ router.post("/", (req, res, next) => {
     .find({
       location: { $geoWithin: { $centerSphere: [location, radius] } },
     })
-    .select("location")
+    .select("location user")
+    .populate("user")
     .then((result) => {
       res.json(result);
     })

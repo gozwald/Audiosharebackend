@@ -12,8 +12,6 @@ router.post("/", (req, res, next) => {
   const { _id } = req.decoded;
   const { location } = req.body;
 
-  console.log(_id);
-
   try {
     if (!req.file) {
       res.status(400).json("Error, could not upload file");
