@@ -59,6 +59,28 @@ const audioSchema = new Schema(
   }
 );
 
+const feedSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "AudShareUser",
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    item: {
+      type: Schema.Types.Mixed,
+      required: true,
+      ref: "AudShareUser",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const userSchema = new Schema({
   first: { type: String, required: true },
   last: { type: String, required: true },
@@ -72,10 +94,12 @@ const userSchema = new Schema({
   bio: { type: String },
 });
 
+const feed = mongoose.model("AudShareFeed", feedSchema);
 const users = mongoose.model("AudShareUser", userSchema);
 const audioPost = mongoose.model("AudShareAudio", audioSchema);
 
 module.exports = {
   audioPost,
   users,
+  feed,
 };

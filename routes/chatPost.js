@@ -1,8 +1,8 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 const audioSharePost = require("../models/audioShareAudio");
-var socketApi = require("../socketAPI");
-var io = socketApi.io;
+const socketApi = require("../socketAPI");
+const io = socketApi.io;
 
 router.put("/", async (req, res, next) => {
   const { _id: mongouserid } = req.decoded;
@@ -17,8 +17,18 @@ router.put("/", async (req, res, next) => {
 
   const save = await post.save();
 
+  const feed = new audioSharePost.feed({
+    user: save.user,
+    type: "chat",
+    item: save.chats[save.chats.length - 1],
+  });
+
+  const updatedfeed = await feed.save();
+  const populatedfeed = await updatedfeed.execPopulate("user item.user");
   const populated = await save.execPopulate("user chats.user react.user");
+
   io.emit(id, populated);
+  io.emit(mongouserid, populatedfeed);
   res.sendStatus(200);
 });
 
