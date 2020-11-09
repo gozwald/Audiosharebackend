@@ -75,6 +75,16 @@ const feedSchema = new Schema(
       required: true,
       ref: "AudShareUser",
     },
+    postlocator: {
+      id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+      },
+      location: {
+        type: Array,
+        required: true,
+      },
+    },
   },
   {
     timestamps: true,
