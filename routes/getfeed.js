@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 const audioSharePost = require("../models/audioShareAudio");
 const socketApi = require("../socketAPI");
-const io = socketApi.io;
 
 router.put("/", async (req, res, next) => {
   const { _id: mongouserid } = req.decoded;
@@ -11,6 +10,7 @@ router.put("/", async (req, res, next) => {
     .find({
       user: mongouserid,
     })
+    .sort({ createdAt: "desc" })
     .select("-user")
     .populate("item.user");
 
