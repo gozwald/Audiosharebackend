@@ -22,7 +22,7 @@ router.put("/", async (req, res, next) => {
       user: save.user,
       type: "chat",
       item: save.chats[save.chats.length - 1],
-      postlocator: { id: save._id, location: save.location.coordinates },
+      postlocator: { _id: save._id, location: save.location.coordinates },
     });
 
     const updatedfeed = await feed.save();
@@ -45,7 +45,7 @@ router.put("/", async (req, res, next) => {
           user: e,
           type: "reply",
           item: save.chats[save.chats.length - 1],
-          postlocator: { id: save._id, location: save.location.coordinates },
+          postlocator: { _id: save._id, location: save.location.coordinates },
         });
 
         const updatedfeed = await feed.save();
