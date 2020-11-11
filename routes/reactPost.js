@@ -15,15 +15,47 @@ router.put("/", async (req, res, next) => {
 
     const reactId = find.react.find(({ user }) => user == mongouserid);
 
-    !reactId
-      ? find.react.push({
-          user: mongouserid,
-        })
-      : find.react.pull(reactId._id);
+    if (!reactId) {
+      find.react.push({
+        user: mongouserid,
+      });
+      if (find.user != mongouserid) {
+        const feed = new audioSharePost.feed({
+          user: find.user,
+          type: "react",
+          item: {
+            user: mongouserid,
+          },
+          postlocator: { _id: find._id, location: find.location.coordinates },
+          read: false,
+        });
+
+        feed.save();
+      }
+    } else {
+      if (find.user != mongouserid) {
+        audioSharePost.feed
+          .findOneAndDelete({
+            user: find.user,
+            "item.user": mongouserid,
+            type: "react",
+            "postlocator._id": find._id,
+          })
+          .exec();
+      }
+      find.react.pull(reactId._id);
+    }
 
     const save = await find.save();
+
     const populated = await save.execPopulate("user chats.user react.user");
     io.emit(id, populated);
+
+    const updatedFeed = await audioSharePost.feed
+      .find({ user: populated.user._id })
+      .populate("user item.user");
+    io.emit(populated.user._id, updatedFeed);
+
     res.sendStatus(200);
   } catch (error) {
     console.log(error);

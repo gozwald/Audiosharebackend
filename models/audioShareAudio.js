@@ -71,9 +71,14 @@ const feedSchema = new Schema(
       required: true,
     },
     item: {
-      type: Schema.Types.Mixed,
-      required: true,
-      ref: "AudShareUser",
+      user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "AudShareUser",
+      },
+      message: {
+        type: Schema.Types.String,
+      },
     },
     postlocator: {
       _id: {
@@ -84,6 +89,9 @@ const feedSchema = new Schema(
         type: Array,
         required: true,
       },
+    },
+    read: {
+      type: Schema.Types.Boolean,
     },
   },
   {
