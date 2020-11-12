@@ -53,7 +53,8 @@ router.put("/", async (req, res, next) => {
 
     const updatedFeed = await audioSharePost.feed
       .find({ user: populated.user._id })
-      .populate("user item.user");
+      .populate("user item.user")
+      .sort({ createdAt: "desc" });
     io.emit(populated.user._id, updatedFeed);
 
     res.sendStatus(200);
